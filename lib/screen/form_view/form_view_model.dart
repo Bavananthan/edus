@@ -25,22 +25,19 @@ class FormPostViewModel extends BaseViewModel {
   Future<void> createPost(BuildContext context) async {
     setBusy(true);
 
-    notifyListeners();
-
     try {
       final newPost = await _apiService.createPost(
           postData.title ?? "", postData.body ?? "");
       customerProvider.posts.insert(0, newPost);
       app.showFlashNotification(
           msg: "Successfully created", bgColor: colors.blue);
-      notifyListeners();
+      Navigator.pop(context);
     } catch (e) {
       app.showFlashNotification(msg: "Try Again", bgColor: colors.red);
     } finally {
       setBusy(false);
-
-      Navigator.pop(context);
     }
+    notifyListeners();
   }
 
   FormData formData = FormData();
@@ -58,9 +55,10 @@ class FormPostViewModel extends BaseViewModel {
               customerProvider.posts.indexWhere((p) => p.id == formData.id);
           if (index != -1) {
             customerProvider.posts[index] = value;
-            notifyListeners();
+
             app.showFlashNotification(
                 msg: "Update Successfully", bgColor: colors.blue);
+            Navigator.pop(context);
           }
         },
       );
@@ -69,7 +67,6 @@ class FormPostViewModel extends BaseViewModel {
       print(e.toString());
     } finally {
       setBusy(false);
-      Navigator.pop(context);
     }
 
     notifyListeners();

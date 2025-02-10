@@ -13,28 +13,30 @@ class CommonButton extends StatelessWidget {
       required this.title,
       this.isApiCall = false,
       required this.onPressed,
-      this.color = const Color(0xff00345F)});
+      this.color = const Color(0xFF9E9E9E)});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: isApiCall ? null : onPressed,
       child: Container(
         padding: const EdgeInsets.all(13),
         // margin: const EdgeInsets.symmetric(horizontal: 16),
 
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [colors.blue, colors.brandColor],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        // decoration: BoxDecoration(
-        //   color: color,
-        //   borderRadius: BorderRadius.circular(8),
-        // ),
+        decoration: isApiCall
+            ? BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(8),
+              )
+            : BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [colors.blue, colors.brandColor],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+
         child: Center(
           child: isApiCall
               ? CircularProgressIndicator(

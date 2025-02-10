@@ -45,6 +45,7 @@ class CommonDialog {
                 // Message
                 if (message != null)
                   commonText(
+                      maxLines: 3,
                       text: message,
                       overflow: TextOverflow.ellipsis,
                       color: colors.gray,
